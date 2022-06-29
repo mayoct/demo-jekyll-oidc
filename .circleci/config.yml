@@ -46,8 +46,6 @@ jobs:
   deploy:
     docker:
       - image: cimg/python:3.10.4
-    environment:
-      S3_BUCKET_NAME: demo-jekyll-oidc-s3
     steps:
       - attach_workspace:
           at: ./
@@ -56,4 +54,4 @@ jobs:
       - aws-s3/sync:
           arguments: "--delete"
           from: ./_site
-          to: "s3://$S3_BUCKET_NAME/"
+          to: "s3://mshk-jekyll-deploy-s3/"
