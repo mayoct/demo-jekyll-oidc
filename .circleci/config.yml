@@ -28,7 +28,7 @@ workflows:
       - deploy:
           context: aws-s3-deploy
           requires:
-            - build
+            - pause_workflow
           filters:
             branches:
               only: main
