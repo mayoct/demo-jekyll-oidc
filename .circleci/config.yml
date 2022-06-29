@@ -67,8 +67,8 @@ jobs:
       - checkout
       - ruby/install-deps
       - run:
-          name: Jekyll build
-          command: bundle exec jekyll build
+          name: Jekyll serve
+          command: bundle exec jekyll serve
 
   deploy:
     docker:
