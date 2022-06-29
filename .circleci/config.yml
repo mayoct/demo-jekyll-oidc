@@ -4,15 +4,30 @@ orbs:
   aws-cli: circleci/aws-cli@3.1.1
   aws-s3: circleci/aws-s3@3.0
   ruby: circleci/ruby@1.8
+  slack: circleci/slack@4.1
 
 workflows:
   test-deploy:
     jobs:
       - build
+      - test
+          requires:
+            - build
+      - slack/on-hold
+          context: slack-secrets
+          requires:
+            - build
+      - pause_workflow:
+          requires:
+            - test
+            - slack/on-hold
+          filters:
+            branches:
+              only: main
       - deploy:
           context: aws-s3-deploy
           requires:
-            - build
+            - pause_workflow
           filters:
             branches:
               only: main
@@ -41,6 +56,19 @@ jobs:
           root: ./
           paths:
             - _site
+
+  test:
+    docker:
+      - image: cimg/ruby:2.7.6
+    environment:
+      BUNDLE_PATH: ~/project/vendor/bundle
+    steps:
+      - checkout
+      - ruby/install-deps
+      - run:
+          name: Jekyll build
+          command: bundle exec jekyll build
+
   deploy:
     docker:
       - image: cimg/python:3.10.4
