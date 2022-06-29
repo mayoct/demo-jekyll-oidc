@@ -10,6 +10,13 @@ workflows:
   test-deploy:
     jobs:
       - build
+      - preview:
+          context: aws-s3-deploy
+          requires:
+            - build
+          filters:
+            branches:
+              only: /.*-preview/
       - deploy:
           context: aws-s3-deploy
           requires:
@@ -42,6 +49,19 @@ jobs:
           root: ./
           paths:
             - _site
+
+  preview:
+    docker:
+      - image: cimg/python:3.10.4
+    steps:
+      - attach_workspace:
+          at: ./
+      - aws-cli/setup:
+          role-arn: arn:aws:iam::483285841698:role/mshk-jekyll-preview-role
+      - aws-s3/sync:
+          arguments: "--delete"
+          from: ./_site
+          to: "s3://mshk-jekyll-deploy-s3/${CIRCLE_BRANCH}"
 
   deploy:
     docker:
