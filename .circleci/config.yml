@@ -10,7 +10,7 @@ workflows:
   test-deploy:
     jobs:
       - build
-      - test:
+      - test
           requires:
             - build
       - slack/on-hold
@@ -24,10 +24,11 @@ workflows:
           filters:
             branches:
               only: main
+
       - deploy:
           context: aws-s3-deploy
           requires:
-            - pause_workflow
+            - build
           filters:
             branches:
               only: main
