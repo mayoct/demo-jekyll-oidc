@@ -49,7 +49,7 @@ jobs:
     steps:
       - attach_workspace:
           at: ./
-      - aws-cli/assume-role-with-web-identity:
+      - aws-cli/setup:
           role-arn: arn:aws:iam::483285841698:role/demo-jekyll-deploy-oidc
       - aws-s3/sync:
           arguments: "--delete"
