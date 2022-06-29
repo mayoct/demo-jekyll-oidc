@@ -1,6 +1,7 @@
 version: 2.1
 
 orbs:
+  aws-cli: circleci/aws-cli@3.1.1
   aws-s3: circleci/aws-s3@3.0
   ruby: circleci/ruby@1.8
 
@@ -48,6 +49,8 @@ jobs:
     steps:
       - attach_workspace:
           at: ./
+      - aws-cli/assume-role-with-web-identity:
+          role-arn: arn:aws:iam::483285841698:role/demo-jekyll-deploy-oidc
       - aws-s3/sync:
           arguments: "--delete"
           from: ./_site
