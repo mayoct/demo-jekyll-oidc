@@ -45,12 +45,12 @@ jobs:
     docker:
       - image: cimg/python:3.10.4
     environment:
-      S3_BUCKET_NAME: demo-jekyll-deploy
+      S3_BUCKET_NAME: demo-jekyll-oidc-s3
     steps:
       - attach_workspace:
           at: ./
       - aws-cli/setup:
-          role-arn: arn:aws:iam::483285841698:role/demo-jekyll-deploy-oidc
+          role-arn: arn:aws:iam::483285841698:role/demo-jekyll-oidc-role
       - aws-s3/sync:
           arguments: "--delete"
           from: ./_site
