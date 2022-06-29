@@ -10,25 +10,10 @@ workflows:
   test-deploy:
     jobs:
       - build
-      - test:
-          requires:
-            - build
-      - slack/on-hold:
-          context: slack-secrets
-          requires:
-            - build
-      - pause_workflow:
-          requires:
-            - test
-            - slack/on-hold
-          filters:
-            branches:
-              only: main
-          type: approval
       - deploy:
           context: aws-s3-deploy
           requires:
-            - pause_workflow
+            - build
           filters:
             branches:
               only: main
@@ -58,18 +43,6 @@ jobs:
           paths:
             - _site
 
-  test:
-    docker:
-      - image: cimg/ruby:2.7.6
-    environment:
-      BUNDLE_PATH: ~/project/vendor/bundle
-    steps:
-      - checkout
-      - ruby/install-deps
-      - run:
-          name: Jekyll serve
-          command: bundle exec jekyll serve
-
   deploy:
     docker:
       - image: cimg/python:3.10.4
@@ -79,7 +52,7 @@ jobs:
       - attach_workspace:
           at: ./
       - aws-cli/setup:
-          role-arn: arn:aws:iam::483285841698:role/demo-jekyll-oidc-role
+          role-arn: arn:aws:iam::483285841698:role/mshk-jekyll-deploy-role
       - aws-s3/sync:
           arguments: "--delete"
           from: ./_site
