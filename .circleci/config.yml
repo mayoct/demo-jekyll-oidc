@@ -9,6 +9,7 @@ workflows:
     jobs:
       - build
       - deploy:
+          context: aws-s3-deploy
           requires:
             - build
           filters:
