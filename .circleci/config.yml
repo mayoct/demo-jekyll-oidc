@@ -10,7 +10,7 @@ workflows:
   test-deploy:
     jobs:
       - build
-      - test
+      - test:
           requires:
             - build
       - slack/on-hold
