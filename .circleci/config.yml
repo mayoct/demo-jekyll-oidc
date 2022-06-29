@@ -10,10 +10,10 @@ workflows:
   test-deploy:
     jobs:
       - build
-      - test
+      - test:
           requires:
             - build
-      - slack/on-hold
+      - slack/on-hold:
           context: slack-secrets
           requires:
             - build
@@ -24,7 +24,7 @@ workflows:
           filters:
             branches:
               only: main
-
+          type: approval
       - deploy:
           context: aws-s3-deploy
           requires:
