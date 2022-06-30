@@ -61,7 +61,7 @@ jobs:
       - aws-s3/sync:
           arguments: "--delete"
           from: ./_site
-          to: "s3://mshk-jekyll-deploy-s3/${CIRCLE_BRANCH}"
+          to: "s3://mshk-jekyll-preview-s3/${CIRCLE_BRANCH}"
 
   deploy:
     docker:
