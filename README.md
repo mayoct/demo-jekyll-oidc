@@ -18,8 +18,8 @@ Jekyllを使って静的ウェブコンテンツをビルド(Jekyll build)した
 具体的には、s3://mshk-jekyll-deploy-s3/${CIRCLE_BRANCH} に生成コンテンツ(_site配下)を同期しています。
 
 例えば、
-- hello ブランチのビルド結果は、https://mshk-jekyll-preview-s3.s3.ap-northeast-1.amazonaws.com/hello-preview/ で公開
-- bye ブランチのビルド結果は、https://mshk-jekyll-preview-s3.s3.ap-northeast-1.amazonaws.com/bye-preview/ で公開
+- hello ブランチのビルド結果は、https://mshk-jekyll-preview-s3.s3.ap-northeast-1.amazonaws.com/hello-preview/index.html で公開
+- bye ブランチのビルド結果は、https://mshk-jekyll-preview-s3.s3.ap-northeast-1.amazonaws.com/bye-preview/index.html で公開
 
 する設定を Amazon S3 側で行っています。
 
