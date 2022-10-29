@@ -19,7 +19,7 @@ Jekyllを使って静的ウェブコンテンツをビルド(Jekyll build)した
 
 例えば、
 - hello ブランチのビルド結果は、https://mshk-jekyll-preview-s3.s3.ap-northeast-1.amazonaws.com/hello-preview/ で公開
-- bye ブランチのビルド結果は https://mshk-jekyll-preview-s3.s3.ap-northeast-1.amazonaws.com/bye-preview/ で公開
+- bye ブランチのビルド結果は、https://mshk-jekyll-preview-s3.s3.ap-northeast-1.amazonaws.com/bye-preview/ で公開
 
 する設定を Amazon S3 側で行っています。
 
